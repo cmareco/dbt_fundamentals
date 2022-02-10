@@ -1,0 +1,29 @@
+version: 2
+
+models:
+    - name: stg_payments
+      description: Payments from Stripe
+      columns:
+        - name: payment_status
+          description: Status of the order payment
+          tests:
+           - not_null
+           - accepted_values:
+                values:
+                - success
+                - fail
+        - name: order_id
+          tests:
+           - relationships:
+                to: ref('stg_orders')
+                field: order_id
+
+        - name: payment_method
+          description: '{{ doc("payment_method") }}'
+          tests:
+            - accepted_values:
+                values:
+                    - credit_card
+                    - coupon
+                    - bank_transfer
+                    - gift_card
