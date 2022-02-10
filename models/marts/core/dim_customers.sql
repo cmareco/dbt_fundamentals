@@ -22,7 +22,7 @@ customer_orders as (
         min(order_date) as first_order_date,
         max(order_date) as most_recent_order_date,
         count(order_id) as number_of_orders,
-        sum(case when payment_status = 'success' then amount else 0 end) lifetime_value
+        sum(case when payment_status = 'success' then payment_amount else 0 end) lifetime_value
     from orders o left join payments using (order_id)
 
     group by 1
